@@ -1,0 +1,20 @@
+base:
+  random_seed: 42
+  img_size: 224
+
+data:
+  raw_file: data/data_from_iNaturalist/observations.csv
+  clean_csv: data/dataset.csv
+  images_dir: data/dataset_images
+  allowed_species:
+    - Panthera leo
+    - Panthera pardus
+    - Panthera onca
+    - Panthera tigris
+    - Panthera uncia
+
+train:
+  batch_size: 32
+  epochs: 1
+  lr: 0.001
+  model_path: models/best_model.pth

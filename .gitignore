@@ -1,0 +1,9 @@
+# main gitignore
+
+cv-classification-dvc-pipeline/data/dataset.csv
+cv-classification-dvc-pipeline/data/dataset_images/
+cv-classification-dvc-pipeline/models/
+
+cv-classification-on-jupiter-notebook/data/dataset.csv
+cv-classification-on-jupiter-notebook/data/dataset_images/
+cv-classification-on-jupiter-notebook/models/
