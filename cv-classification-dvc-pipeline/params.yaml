@@ -15,6 +15,6 @@ data:
 
 train:
   batch_size: 32
-  epochs: 1
+  epochs: 15 # 30
   lr: 0.001
   model_path: models/best_model.pth

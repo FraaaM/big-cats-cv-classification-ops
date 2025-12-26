@@ -1,0 +1,78 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/data_from_iNaturalist/observations.csv
+      hash: md5
+      md5: 1e50a6eacca1351be578044f68dfdc47
+      size: 2981512
+    - path: src/prepare.py
+      hash: md5
+      md5: a24ae3b3bd2ed9a449530c7ba6ffe402
+      size: 1302
+    params:
+      params.yaml:
+        data.allowed_species:
+        - Panthera leo
+        - Panthera pardus
+        - Panthera onca
+        - Panthera tigris
+        - Panthera uncia
+        data.clean_csv: data/dataset.csv
+        data.raw_file: data/data_from_iNaturalist/observations.csv
+    outs:
+    - path: data/dataset.csv
+      hash: md5
+      md5: e9b21d5e6814119acd60f561199bd738
+      size: 579714
+  download:
+    cmd: python src/download.py
+    deps:
+    - path: data/dataset.csv
+      hash: md5
+      md5: e9b21d5e6814119acd60f561199bd738
+      size: 579714
+    - path: src/download.py
+      hash: md5
+      md5: 63092e0c04787c9e235fecaec325b72a
+      size: 1403
+    params:
+      params.yaml:
+        data.clean_csv: data/dataset.csv
+        data.images_dir: data/dataset_images
+    outs:
+    - path: data/dataset_images
+      hash: md5
+      md5: d46deb5273cb7a43d8df6fef18407475.dir
+      size: 965648465
+      nfiles: 5602
+  index:
+    cmd: python src/build_index.py
+    deps:
+    - path: data/dataset_images
+      hash: md5
+      md5: d46deb5273cb7a43d8df6fef18407475.dir
+      size: 965648465
+      nfiles: 5602
+    - path: model_weights/best_model.pth
+      hash: md5
+      md5: eda6970e817112a2bf67c8c597fbef04
+      size: 81637343
+    - path: src/build_index.py
+      hash: md5
+      md5: 80fee6653a92c66988cd4b1c23997235
+      size: 2017
+    params:
+      params.yaml:
+        model.weights_path: model_weights/best_model.pth
+        output.index_file: faiss_index/vector_index.bin
+    outs:
+    - path: faiss_index/image_paths.json
+      hash: md5
+      md5: 552390df1f687e7022d4fa02bfe915ba
+      size: 180081
+    - path: faiss_index/vector_index.bin
+      hash: md5
+      md5: 8cac72b63dd45fd70b70ff909defc8d5
+      size: 28682285

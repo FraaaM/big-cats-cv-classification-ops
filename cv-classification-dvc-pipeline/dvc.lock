@@ -1,0 +1,109 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/data_from_iNaturalist/observations.csv
+      hash: md5
+      md5: 1e50a6eacca1351be578044f68dfdc47
+      size: 2981512
+    - path: src/prepare.py
+      hash: md5
+      md5: 70aadc7c62d146a2e057bd0f5f4c90cd
+      size: 1064
+    params:
+      params.yaml:
+        data.allowed_species:
+        - Panthera leo
+        - Panthera pardus
+        - Panthera onca
+        - Panthera tigris
+        - Panthera uncia
+        data.clean_csv: data/dataset.csv
+        data.raw_file: data/data_from_iNaturalist/observations.csv
+    outs:
+    - path: data/dataset.csv
+      hash: md5
+      md5: 901726b2d850caddb19eeca37a771616
+      size: 574111
+  download:
+    cmd: python src/download.py
+    deps:
+    - path: data/dataset.csv
+      hash: md5
+      md5: 901726b2d850caddb19eeca37a771616
+      size: 574111
+    - path: src/download.py
+      hash: md5
+      md5: 35165a46d1d004dd3a74fc58ada1c7ae
+      size: 1410
+    params:
+      params.yaml:
+        data.clean_csv: data/dataset.csv
+        data.images_dir: data/dataset_images
+    outs:
+    - path: data/dataset_images
+      hash: md5
+      md5: d46deb5273cb7a43d8df6fef18407475.dir
+      size: 965648465
+      nfiles: 5602
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/dataset_images
+      hash: md5
+      md5: d46deb5273cb7a43d8df6fef18407475.dir
+      size: 965648465
+      nfiles: 5602
+    - path: src/train.py
+      hash: md5
+      md5: 523144894a02660d7bc5108d24de494c
+      size: 4895
+    params:
+      params.yaml:
+        base.img_size: 224
+        base.random_seed: 42
+        train.batch_size: 32
+        train.epochs: 30
+        train.lr: 0.001
+        train.model_path: models/best_model.pth
+    outs:
+    - path: models/best_model.pth
+      hash: md5
+      md5: eda6970e817112a2bf67c8c597fbef04
+      size: 81637343
+    - path: results/training_history.json
+      hash: md5
+      md5: 3b8d411a5b82917dcec940b9e5706b67
+      size: 4464
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/dataset_images
+      hash: md5
+      md5: d46deb5273cb7a43d8df6fef18407475.dir
+      size: 965648465
+      nfiles: 5602
+    - path: models/best_model.pth
+      hash: md5
+      md5: eda6970e817112a2bf67c8c597fbef04
+      size: 81637343
+    - path: src/evaluate.py
+      hash: md5
+      md5: 68dcaed4553200b30ca70b817f49ba25
+      size: 4168
+    params:
+      params.yaml:
+        base.img_size: 224
+        base.random_seed: 42
+        train.batch_size: 32
+        train.model_path: models/best_model.pth
+    outs:
+    - path: results/confusion_matrix.png
+      hash: md5
+      md5: fbc30987ecf43e00272b530b9e4f3429
+      size: 42135
+    - path: results/evaluation_metrics.json
+      hash: md5
+      md5: 2383b85636341ef4a8c84bd6c8b29ae7
+      size: 124

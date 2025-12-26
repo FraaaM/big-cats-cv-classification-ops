@@ -1,0 +1,37 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - src/prepare.py
+      - data/data_from_iNaturalist/observations.csv
+    params:
+      - data.raw_file
+      - data.clean_csv
+      - data.allowed_species
+    outs:
+      - data/dataset.csv
+      
+  download:
+    cmd: python src/download.py
+    deps:
+      - src/download.py
+      - data/dataset.csv
+    params:
+      - data.clean_csv
+      - data.images_dir
+    outs:
+      - data/dataset_images:
+          persist: true
+
+  index:
+    cmd: python src/build_index.py
+    deps:
+      - src/build_index.py
+      - data/dataset_images
+      - model_weights/best_model.pth
+    params:
+      - model.weights_path
+      - output.index_file
+    outs:
+      - faiss_index/vector_index.bin
+      - faiss_index/image_paths.json

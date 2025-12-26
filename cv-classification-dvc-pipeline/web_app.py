@@ -52,6 +52,11 @@ else:
     IMG_SIZE = 224
     DATA_DIR = "data/dataset_images"
 
+if not os.path.exists(MODEL_PATH):
+    FALLBACK_PATH = "../image-search-dvc-pipeline/model_weights/best_model.pth"
+    st.warning(f"Ваша новая модель не найдена в {MODEL_PATH}. Используются другая fine-tuned модель. Путь: {FALLBACK_PATH}")
+    MODEL_PATH = FALLBACK_PATH
+
 FALLBACK_CLASSES = [
     'Panthera leo', 
     'Panthera onca', 

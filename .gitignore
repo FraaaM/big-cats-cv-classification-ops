@@ -8,3 +8,8 @@ cv-classification-dvc-pipeline/results_temp/
 cv-classification-on-jupiter-notebook/data/dataset.csv
 cv-classification-on-jupiter-notebook/data/dataset_images/
 cv-classification-on-jupiter-notebook/models/
+
+image-search-dvc-pipeline/data/dataset.csv
+image-search-dvc-pipeline/data/dataset_images/
+image-search-dvc-pipeline/src/__pycache__/
+
