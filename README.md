@@ -17,13 +17,13 @@ Panthera Vision — это end-to-end MLOps проект для классифи
 Тигр (Panthera tigris)
 Ягуар (Panthera onca)
 Леопард (Panthera pardus)
-Ирбис / Снежный барс (Panthera uncia)
+Снежный барс (Panthera uncia)
 
 ## Структура проекта
 Репозиторий организован по принципу монорепозитория и содержит два отдельных проекта:
-
+```bash
 ├── cv-classification-dvc-pipeline/    # Основной проект обучения (DVC)
-│   ├── data/ # Датасеты ниже игнорируются git
+|   ├── data/                   # Датасеты ниже игнорируются git
 │   │     ├──data_from_iNaturalist/observations.csv
 │   │     ├──dataset.csv
 │   │     └──dataset_images/... # папки с классами изображений                           
@@ -38,8 +38,8 @@ Panthera Vision — это end-to-end MLOps проект для классифи
     ├── model_weights/                 # Копия обученной модели из cv-classification-dvc-pipeline
     ├── build_index.py                 # Скрипт создания векторного индекса
     └── web_app.py                     # Демо-приложение поиска
+```
 
----
 ## Модуль 1: Пайплайн классификации (DVC)
 
 ### Запуск пайплайна DVC
