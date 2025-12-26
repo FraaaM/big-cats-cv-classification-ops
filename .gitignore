@@ -3,6 +3,7 @@
 cv-classification-dvc-pipeline/data/dataset.csv
 cv-classification-dvc-pipeline/data/dataset_images/
 cv-classification-dvc-pipeline/models/
+cv-classification-dvc-pipeline/results_temp/
 
 cv-classification-on-jupiter-notebook/data/dataset.csv
 cv-classification-on-jupiter-notebook/data/dataset_images/
